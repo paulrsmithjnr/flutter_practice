@@ -5,8 +5,6 @@ class Question extends StatelessWidget {
 
   Question(this.questionText);
 
-  // const Question({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(

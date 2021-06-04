@@ -6,8 +6,6 @@ class Answer extends StatelessWidget {
 
   Answer(this.selectHandler, this.answerText);
 
-  // const Answer({ Key? key }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
