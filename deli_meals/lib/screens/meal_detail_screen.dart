@@ -93,6 +93,15 @@ class MealDetailScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.delete,
+        ),
+        onPressed: () {
+          Navigator.of(context).pop(
+              mealId); //returns the mealId back to the pushedNamed function that opened this page
+        },
+      ),
     );
   }
 }
