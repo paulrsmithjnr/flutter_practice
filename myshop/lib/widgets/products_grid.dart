@@ -7,7 +7,8 @@ import './product_item.dart';
 class ProductsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<Products>(context);
+    final productsData = Provider.of<Products>(
+        context); //listen not set to false here because I want the screen to update as soon as there is a change
     final products = productsData.items;
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
