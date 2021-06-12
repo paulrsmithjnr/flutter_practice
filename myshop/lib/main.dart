@@ -42,7 +42,10 @@ class MyApp extends StatelessWidget {
         // ignore: missing_required_param
         ChangeNotifierProxyProvider<Auth, Orders>(
           update: (ctx, auth, previousOrders) => Orders(
-              auth.token, previousOrders == null ? [] : previousOrders.orders),
+            auth.token,
+            auth.userId,
+            previousOrders == null ? [] : previousOrders.orders,
+          ),
           // create: (ctx) => Orders(),
         ),
       ],
