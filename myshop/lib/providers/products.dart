@@ -42,6 +42,10 @@ class Products with ChangeNotifier {
     // ),
   ];
 
+  final String authToken;
+
+  Products(this.authToken, this._items);
+
   List<Product> get items {
     return [..._items]; //return a copy of the items list
   }
@@ -56,7 +60,7 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     final url = Uri.parse(
-        'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products.json');
+        'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products.json?auth=$authToken');
     //or final url = Uri.https('flutter-myshop-e248e-default-rtdb.firebaseio.com/', '/products.json');
     try {
       final response = await http.get(url);
@@ -89,7 +93,7 @@ class Products with ChangeNotifier {
     //when using 'await' we can get rid of the .then and .catchError blocks -- dart creates these blocks behind the scenes from the code in the lines after the line where the await keyword is used
     //with the async-await approach we can use a try-catch statement instead of the normal .catchError block
     final url = Uri.parse(
-        'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products.json');
+        'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products.json?auth=$authToken');
     //or final url = Uri.https('flutter-myshop-e248e-default-rtdb.firebaseio.com/', '/products.json');
 
     try {
@@ -128,7 +132,7 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url = Uri.parse(
-          'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products/$id.json');
+          'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken');
       //or final url = Uri.https('flutter-myshop-e248e-default-rtdb.firebaseio.com/', '/products.json');
       await http.patch(
         url,
@@ -149,7 +153,7 @@ class Products with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     final url = Uri.parse(
-        'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products/$id.json');
+        'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken');
     //or final url = Uri.https('flutter-myshop-e248e-default-rtdb.firebaseio.com/', '/products.json');
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
