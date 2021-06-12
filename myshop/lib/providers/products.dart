@@ -53,24 +53,29 @@ class Products with ChangeNotifier {
     return _items.where((prodItem) => prodItem.isFavourite).toList();
   }
 
-  Future<void> addProduct(Product product) {
-    final url = Uri.parse(
-        'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products.json');
-    //or final url = Uri.https('flutter-myshop-e248e-default-rtdb.firebaseio.com/', '/products.json');
-    return http
-        .post(
-      url,
-      body: json.encode(
-        {
-          'title': product.title,
-          'description': product.description,
-          'imageUrl': product.imageUrl,
-          'price': product.price,
-          'isFavourite': product.isFavourite,
-        },
-      ),
-    )
-        .then((response) {
+  Future<void> addProduct(Product product) async {
+    //using 'async' automatically wraps the contents of this function as a Future
+    //when using 'await' we can get rid of the .then and .catchError blocks -- dart creates these blocks behind the scenes from the code in the lines after the line where the await keyword is used
+    //with the async-await approach we can use a try-catch statement instead of the normal .catchError block
+
+    try {
+      final url = Uri.parse(
+          'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products.json');
+      //or final url = Uri.https('flutter-myshop-e248e-default-rtdb.firebaseio.com/', '/products.json');
+
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
+            'title': product.title,
+            'description': product.description,
+            'imageUrl': product.imageUrl,
+            'price': product.price,
+            'isFavourite': product.isFavourite,
+          },
+        ),
+      );
+
       final newProduct = Product(
         title: product.title,
         description: product.description,
@@ -82,10 +87,11 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       //_items.insert(0, newProduct); //at the start of the list
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       print(error);
       throw error; //sends error to the edit products screen
-    });
+
+    }
   }
 
   updateProduct(String id, Product newProduct) {
