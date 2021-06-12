@@ -98,14 +98,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     });
 
     if (_editedProduct.id != null) {
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-
-      setState(() {
-        _isLoading = false;
-      });
-
-      Navigator.of(context).pop();
     } else {
       try {
         await Provider.of<Products>(context, listen: false)
@@ -127,17 +121,20 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
-      } finally {
-        //code in this block always run regardless of an error being caught or the function running successfully
-        setState(() {
-          _isLoading = false;
-        });
-
-        Navigator.of(context).pop();
-        //results in only returning to previous screen once the new product has been stored on the server
-
       }
+      //  finally {
+      //   //code in this block always run regardless of an error being caught or the function running successfully
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   Navigator.of(context).pop();
+      //   //results in only returning to previous screen once the new product has been stored on the server
+      // }
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
