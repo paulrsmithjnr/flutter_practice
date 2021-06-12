@@ -83,12 +83,11 @@ class Products with ChangeNotifier {
     //using 'async' automatically wraps the contents of this function as a Future
     //when using 'await' we can get rid of the .then and .catchError blocks -- dart creates these blocks behind the scenes from the code in the lines after the line where the await keyword is used
     //with the async-await approach we can use a try-catch statement instead of the normal .catchError block
+    final url = Uri.parse(
+        'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products.json');
+    //or final url = Uri.https('flutter-myshop-e248e-default-rtdb.firebaseio.com/', '/products.json');
 
     try {
-      final url = Uri.parse(
-          'https://flutter-myshop-e248e-default-rtdb.firebaseio.com/products.json');
-      //or final url = Uri.https('flutter-myshop-e248e-default-rtdb.firebaseio.com/', '/products.json');
-
       final response = await http.post(
         url,
         body: json.encode(
